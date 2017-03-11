@@ -18,25 +18,25 @@ force = Variable(2, T - 1)
 
 # Create a problem instance
 mu = 1
-# constraints = []
-#
-# # Add constraints on our variables
-# for i in 1 : T - 1
-#   constraints += position[:, i + 1] == position[:, i] + h * velocity[:, i]
-# end
-#
-# for i in 1 : T - 1
-#   acceleration = force[:, i]/mass + g - drag * velocity[:, i]
-#   constraints += velocity[:, i + 1] == velocity[:, i] + h * acceleration
-# end
-#
-# # Add position constraints
-# constraints += position[:, 1] == 0
-# constraints += position[:, T] == final_position
-#
-# # Add velocity constraints
-# constraints += velocity[:, 1] == initial_velocity
-# constraints += velocity[:, T] == 0
+constraints = []
+
+# Add constraints on our variables
+for i in 1 : T - 1
+  constraints += position[:, i + 1] == position[:, i] + h * velocity[:, i]
+end
+
+for i in 1 : T - 1
+  acceleration = force[:, i]/mass + g - drag * velocity[:, i]
+  constraints += velocity[:, i + 1] == velocity[:, i] + h * acceleration
+end
+
+# Add position constraints
+constraints += position[:, 1] == 0
+constraints += position[:, T] == final_position
+
+# Add velocity constraints
+constraints += velocity[:, 1] == initial_velocity
+constraints += velocity[:, T] == 0
 
 # Solve the problem
 problem = minimize(sumsquares(force))
